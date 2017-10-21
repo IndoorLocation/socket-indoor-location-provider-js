@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SocketIndoorLocationProvider tester</title>
+</head>
+<body>
+
+<script charset="utf-8" type="text/javascript" src="../node_modules/socket.io-client/dist/socket.io.js"></script>
+<script charset="utf-8" type="text/javascript" src="../dist/socketIndoorLocationProvider.js"></script>
+<script type="text/javascript">
+
+    var listener1 = function (err, indoorLocation) {
+        console.log('listener 1', err, indoorLocation);
+    };
+    var listener2 = function (err, indoorLocation) {
+        console.log('listener 2', err, indoorLocation);
+    };
+
+    console.log('Create instance of SocketIndoorLocationProvider class');
+    var socketIndoorLocationProvider = new SocketIndoorLocationProvider('http://localhost:3003', 'userId');
+    console.log('connection is started', socketIndoorLocationProvider.isStarted());
+
+    console.log('add listener 1');
+    socketIndoorLocationProvider.addListener(listener1);
+    socketIndoorLocationProvider.on('fd', function () {
+        
+    })
+
+    setTimeout(function () {
+        console.log('start connection');
+        socketIndoorLocationProvider.start();
+
+        setTimeout(function () {
+            console.log('add listener 2');
+            socketIndoorLocationProvider.addListener(listener2);
+        }, 5000);
+
+        setTimeout(function () {
+            console.log('remove listener 1');
+            socketIndoorLocationProvider.removeListener(listener1);
+        }, 10000);
+
+        setTimeout(function () {
+            console.log('stop connection');
+            socketIndoorLocationProvider.stop();
+            console.log('connection is started', socketIndoorLocationProvider.isStarted());
+        }, 20000);
+    }, 2000);
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "socket-indoor-location-provider",
+  "version": "1.0.0",
+  "description": "IndoorLocationProvider using websockets to retrieve the user position from a server",
+  "main": "dist/socketIndoorLocationProvider.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IndoorLocation/socket-indoor-location-provider-js.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IndoorLocation/socket-indoor-location-provider-js/issues"
+  },
+  "homepage": "https://github.com/IndoorLocation/socket-indoor-location-provider-js#readme",
+  "dependencies": {
+    "socket.io-client": "2.0.3"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "3.2.3",
+    "source-map-loader": "0.2.2",
+    "typescript": "2.5.3",
+    "webpack": "3.8.1"
+  }
+}
