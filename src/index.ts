@@ -1,4 +1,4 @@
-import * as io from './../node_modules/socket.io-client';
+import * as io from 'socket.io-client';
 
 interface IndoorLocation {
     latitude: number;
