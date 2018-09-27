@@ -28,50 +28,59 @@ class SocketIndoorLocationProvider {
             }
         });
 
+        const toAll = function (err: any, userIndoorLocation: any): void {
+            for (let callback of self.listeners) {
+                callback(err, userIndoorLocation);
+            }
+        }
+
         this.connection.on('connect', function () {
             console.log('connection started');
         });
 
         this.connection.on('indoorLocationChange', function (userIndoorLocation: UserIndoorLocation) {
-            for (let callback of self.listeners) {
-                callback(null, userIndoorLocation);
-            }
+            toAll(null, userIndoorLocation);
+        });
+        this.connection.on('socket error', function (err: any) {
+            toAll(err, null);
         });
         this.connection.on('error', function (err: any) {
-            for (let callback of self.listeners) {
-                callback(err, null);
-            }
+            toAll(err, null);
+        });
+
+        this.connection.on('disconnect', function (reason: string) {
+            console.log('connection closed', reason);
         });
     }
 
-    public start() {
-        console.log('start');
+    public start(): void {
+        console.log('connection start');
         this.connection.open();
     }
-    public stop() {
-        console.log('close');
+    public stop(): void {
+        console.log('connection close');
         this.connection.close();
     }
 
-    public addListener(callback: {(err: any, p: UserIndoorLocation): void}) {
+    public addListener(callback: {(err: any, p: UserIndoorLocation): void}): void {
         this.listeners.push(callback);
     }
-    public removeListener(callback: {(err: any, p: UserIndoorLocation): void}) {
+    public removeListener(callback: {(err: any, p: UserIndoorLocation): void}): void {
         let index = this.listeners.indexOf(callback, 0);
         if (index > -1) {
             this.listeners.splice(index, 1);
         }
     }
 
-    public isStarted() {
+    public isStarted(): boolean {
         return !!this.connection.id;
     }
 
-    public supportsFloor() {
+    public supportsFloor(): boolean {
         return true;
     }
 
-    public getName() {
+    public getName(): string {
         return 'socket';
     }
 }
