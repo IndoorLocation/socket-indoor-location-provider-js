@@ -1,9 +1,9 @@
 const path = require('path');
-const webpack = require("webpack");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
+    mode: 'production',
     entry: {
-        'socketIndoorLocationProvider': './src/index.ts',
         'socketIndoorLocationProvider.min': './src/index.ts',
     },
     output: {
@@ -13,18 +13,18 @@ module.exports = {
         libraryTarget: 'umd'
     },
     devtool: 'source-map',
-
+    
     module: {
-        //noParse: /socket.io-client/, // Try to fix nodejs use
+        // noParse: /socket.io-client/, // Try to fix nodejs use
         rules: [
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
             { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
-
+            
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
         ]
     },
-
+    
     externals: {
         'socket.io-client': {
             commonjs: 'io',
@@ -33,12 +33,16 @@ module.exports = {
             root: 'io'
         }
     },
-
-    plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            include: /\.min\.js$/,
-            minimize: true,
-            sourceMap: true
-        })
-    ]
+    
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                uglifyOptions: {
+                    include: /\.min\.js$/,
+                    minimize: true,
+                    sourceMap: true
+                }
+            })
+        ]
+    }
 };

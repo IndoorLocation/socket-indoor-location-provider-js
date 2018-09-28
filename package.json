@@ -4,7 +4,8 @@
   "description": "IndoorLocationProvider using websockets to retrieve the user position from a server",
   "main": "dist/socketIndoorLocationProvider.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack",
+    "start": "webpack --progress --colors --watch"
   },
   "repository": {
     "type": "git",
@@ -17,12 +18,14 @@
   },
   "homepage": "https://github.com/IndoorLocation/socket-indoor-location-provider-js#readme",
   "dependencies": {
-    "socket.io-client": "2.0.3"
+    "socket.io-client": "2.1.1"
   },
   "devDependencies": {
-    "awesome-typescript-loader": "3.2.3",
-    "source-map-loader": "0.2.2",
-    "typescript": "2.5.3",
-    "webpack": "3.8.1"
+    "@types/socket.io-client": "1.4.32",
+    "awesome-typescript-loader": "5.2.1",
+    "source-map-loader": "0.2.4",
+    "typescript": "3.0.3",
+    "webpack": "4.20.2",
+    "webpack-cli": "^3.1.1"
   }
 }
